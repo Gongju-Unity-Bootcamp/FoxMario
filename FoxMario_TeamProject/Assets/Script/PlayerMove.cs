@@ -6,6 +6,7 @@ public class PlayerMove : MonoBehaviour
 {
     public float maxSpeed = 10f;
     bool isRun;
+    bool isJump;
     public float jump;
     public GameObject Player;
     SpriteRenderer renderer;
@@ -43,9 +44,10 @@ public class PlayerMove : MonoBehaviour
         float Player = Input.GetAxisRaw("Horizontal");
         Vector2 newPosition = new Vector2(Player * maxSpeed, 0);
         transform.Translate(newPosition);
-        if(Input.GetButtonDown("Jump"))
+        if(!isJump && Input.GetButtonDown("Jump"))
         {
             rigid.velocity = new Vector2(rigid.velocity.x, jump);
+            isJump = true;
         }
         
         if (Mathf.Abs(Player) > 0f)
@@ -57,4 +59,14 @@ public class PlayerMove : MonoBehaviour
             anime.SetBool("isRun", false);
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            isJump = false;
+            Debug.Log("Jump :" + isJump);
+        }
+    }
+
 }
