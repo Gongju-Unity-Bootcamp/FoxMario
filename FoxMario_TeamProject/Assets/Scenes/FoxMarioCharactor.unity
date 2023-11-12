@@ -274,7 +274,7 @@ GameObject:
   - component: {fileID: 1570038215}
   m_Layer: 0
   m_Name: Tilemap
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -693,6 +693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 0.05
+  jump: 7
   Player: {fileID: 1988399612}
 --- !u!61 &1988399619
 BoxCollider2D:
