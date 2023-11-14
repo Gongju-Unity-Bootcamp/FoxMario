@@ -18,7 +18,7 @@ public class TrapTriggerStart : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag( "Player"))
         {
             InvokeRepeating(nameof(spawner), 0.01f, 3600f);
         }

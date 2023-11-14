@@ -17,7 +17,7 @@ public class TrapTrigger1 : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
             Falling.simulated = true;
             Destroy(Falling.gameObject, DeleteTime);
