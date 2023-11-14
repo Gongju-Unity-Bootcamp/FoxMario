@@ -13,7 +13,7 @@ public class TrapRaunch : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
             InvokeRepeating(nameof(Raunch), 0.1f, 3600f);
         }
