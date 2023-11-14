@@ -17,7 +17,7 @@ public class NewBehaviourScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D ohder)
     {
 
-        if (ohder.gameObject.tag == "Player")
+        if (ohder.gameObject.CompareTag("Player"))
         {
             rigid = GetComponent<Rigidbody>();
             rigid.velocity = new Vector3(0, speed, 0);
