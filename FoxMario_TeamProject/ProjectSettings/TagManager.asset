@@ -5,8 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - LeftWill
+  - RightWill
   - Die
-  - Trap
+  - TriggerDown
+  - TriggerRight
+  - TriggerUp
+  - TriggerLeft
+  - st2_TriggerStart
   layers:
   - Default
   - TransparentFX
