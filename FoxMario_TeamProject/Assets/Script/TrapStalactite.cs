@@ -7,13 +7,12 @@ public class TrapStalactite : MonoBehaviour
     public float distance;
     bool isFalling = false;
     Rigidbody2D rigid;
-    BoxCollider2D boxCollider2D;
+
 
     // Start is called before the first frame update
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
-        boxCollider2D = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame

@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    GameObject FloorTrigger;
-    GameObject player;
-    public float speed = 50f;
+
+    //public float speed = 50f;
     private Rigidbody rigid;
 
     void Start()
@@ -20,7 +19,7 @@ public class NewBehaviourScript : MonoBehaviour
         if (ohder.gameObject.CompareTag("Player"))
         {
             rigid = GetComponent<Rigidbody>();
-            rigid.velocity = new Vector3(0, speed, 0);
+            //rigid.velocity = new Vector3(0, speed, 0);
 
         }
     }
