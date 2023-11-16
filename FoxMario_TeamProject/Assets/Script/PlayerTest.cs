@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerTest : MonoBehaviour
 {
     public float maxSpeed = 0f;
     bool isRun;

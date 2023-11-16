@@ -2,25 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrapTrigger1 : MonoBehaviour
+public class MonsterTrigger : MonoBehaviour
 {
-    GameObject Traptrigger1;
-    public Rigidbody2D Falling;
-    public float speed = 5f;
-    public float DeleteTime = 5f;
+    public GameObject reach;
+    public Monster Move;
+
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
+    // Update is called once per frame
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Falling.simulated = true;
-            Destroy(Falling.gameObject, DeleteTime);
-
+            
         }
     }
 }
