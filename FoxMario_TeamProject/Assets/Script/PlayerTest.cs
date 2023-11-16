@@ -114,7 +114,6 @@ public class PlayerTest : MonoBehaviour
             isJump = false;
             Debug.Log("Jump :" + isJump);
         }
-
     }
 
 }
