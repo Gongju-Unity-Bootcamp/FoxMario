@@ -1,18 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build.Content;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using System.Text;
+using Unity.VisualScripting;
+using DieText;
 
-public class EndingUI : MonoBehaviour
+
+namespace Ending
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+ 
+    class EndingUI : MonoBehaviour
+    {   
+        //플레이어 사망카운트 초기화
+        private int sceneCount = 0;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+
+        public void Start()
+        {
+            Debug.Log("ㅍㅍ");
+            //변경된 사망카운트를 PlayerPrefs에 "SceneSwitchCount"로 저장하기로함
+            sceneCount = PlayerPrefs.GetInt("SceneSwitchCount", 0);
+            //3초뒤 GoTonextScene 실행
+            Invoke("GoToNextScene", 3f);
+            Invoke("CancleAllInvoke", 4f);
+
+        }
+        public void GoToNextScene()
+        {
+            //사망카운트 -1하며 변경된 내용을 저장하고 Die씬으로 변경
+            sceneCount--;
+            PlayerPrefs.SetInt("SceneSwitchCount", sceneCount);
+            PlayerPrefs.Save();
+            SceneManager.LoadScene("Die");
+        }
+
+        public void CancleAllInvoke()
+        {
+            CancelInvoke();
+        }
+        public void St1_Nest()
+        {
+            SceneManager.LoadScene("stage_2");
+        }
     }
 }

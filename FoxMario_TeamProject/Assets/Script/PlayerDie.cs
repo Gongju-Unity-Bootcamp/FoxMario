@@ -1,34 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Ending;
+using System.Threading;
 
-public class PlayerDie : MonoBehaviour
+namespace Player
 {
-    private Vector3 initialPosition;
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerDie : MonoBehaviour
     {
-        initialPosition = transform.position;
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Trap"))
+        private EndingUI ending = new EndingUI();
+        private Vector3 initialPosition;
+        // Start is called before the first frame update
+        void Start()
         {
-            Die();
+            initialPosition = transform.position;
+
         }
-    }
-    private void Die()
-    {
-        Debug.Log("Player Die...!");
-        Respawn();
-    }
-    private void Respawn()
-    {
-        transform.position = initialPosition;
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Trap"))
+            {
+                Die();
+            }
+            if (collision.CompareTag("St1_House"))
+            {
+                House();
+            }
+        }
+
+
+        public void Die()
+        {
+            Debug.Log("Player Die...!");
+            //사망시 EndingUI 스크립트 실행
+            ending.Start();
+            //Respawn();
+        }
+        private void Respawn()
+        {
+            transform.position = initialPosition;
+        }
+    
+        private void House()
+        {
+
+            ending.St1_Nest();
+        }
     }
 }
