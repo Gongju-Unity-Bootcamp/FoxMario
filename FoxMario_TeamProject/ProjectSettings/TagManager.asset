@@ -15,6 +15,13 @@ TagManager:
   - st2_TriggerStart
   - Trap
   - St1_House
+  - Trig2-A
+  - Trig2-B
+  - Trig2-C
+  - Trig2-D
+  - Trig2-E
+  - Trig2-F
+  - Trig2-G
   layers:
   - Default
   - TransparentFX
