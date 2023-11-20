@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class PlayerTest : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public float maxSpeed = 0f;
     bool isRun;
@@ -59,9 +56,7 @@ public class PlayerTest : MonoBehaviour
             }
             else
             {
-                {
-                    rigid.velocity = new Vector2(0, rigid.velocity.y);
-                }
+                rigid.velocity = new Vector2(0, rigid.velocity.y);
             }
         }
         //มกวม

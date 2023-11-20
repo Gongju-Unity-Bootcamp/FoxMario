@@ -14,13 +14,13 @@ namespace DieText
         public void Start()
         {
             //sceneCount = PlayerPrefs.GetFloat("SceneCount", 0);
-            int sceneCount = PlayerPrefs.GetInt("SceneSwitchCount", 0);
+
             Txt();
         }
 
         public void Txt()
         {
-            int sceneCount = PlayerPrefs.GetInt("SceneSwitchCount", 0);
+            int sceneCount = PlayerPrefs.GetInt("SceneSwitchCount");
             countText.text = "" + sceneCount;
 
         }

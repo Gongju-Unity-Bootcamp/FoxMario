@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Die.unity
     guid: ab77756c371c5f1438d6e489f501a384
   - enabled: 1
-    path: Assets/Scenes/Stage1 test.unity
+    path: Assets/Scenes/Stage1.unity
     guid: 43a99db7ffb837647abd5d91c43c70fc
   - enabled: 1
     path: Assets/Scenes/EndingText2.unity

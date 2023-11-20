@@ -11,6 +11,7 @@ namespace Player
     {
         private EndingUI ending = new EndingUI();
         private Vector3 initialPosition;
+        public static bool isDied;
         // Start is called before the first frame update
         void Start()
         {
@@ -23,10 +24,6 @@ namespace Player
             {
                 Die();
             }
-            if (collision.CompareTag("St1_House"))
-            {
-                House();
-            }
         }
 
 
@@ -34,18 +31,17 @@ namespace Player
         {
             Debug.Log("Player Die...!");
             //사망시 EndingUI 스크립트 실행
-            ending.Start();
-            //Respawn();
+            //ending.Start();
+            Respawn();
         }
         private void Respawn()
         {
-            transform.position = initialPosition;
+            isDied = true;
+            PlayerPrefs.SetString("PrevSceneName", SceneManager.GetActiveScene().name);
+            // 2초 딜레이 예정
+            //SceneManager.LoadScene("Die");
         }
     
-        private void House()
-        {
 
-            ending.St1_Nest();
-        }
     }
 }

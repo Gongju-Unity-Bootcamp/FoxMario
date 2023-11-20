@@ -1,4 +1,5 @@
 using Ending;
+using Player;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -14,7 +15,8 @@ namespace Back
         {
             // Space 클릭시 GoPreviousScene 실행
             if (Input.GetKeyDown(KeyCode.Space))
-            { 
+            {
+                PlayerDie.isDied = false;
                 GoPreviousScene();
             }
             // R키 입력시 사망카운트 초기화

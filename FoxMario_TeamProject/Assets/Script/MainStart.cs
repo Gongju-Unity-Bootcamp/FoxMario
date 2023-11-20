@@ -8,6 +8,7 @@ public class MainStart : MonoBehaviour
     public Button buttonPosition;
     public int btnIndex;
 
+
     private void Start()
     {
         btnIndex = 0;
@@ -25,5 +26,7 @@ public class MainStart : MonoBehaviour
         {
             SceneManager.LoadScene("Stage1 test");
         }
+
     }
 }
+
