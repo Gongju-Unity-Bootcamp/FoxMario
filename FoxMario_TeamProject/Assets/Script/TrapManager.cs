@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public class FallTrap
 {
-    public string name;
+    //public string name;
     public GameObject gameObject;
     public bool isActived;
     public float scale;
