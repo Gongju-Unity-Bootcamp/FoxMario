@@ -1,24 +1,22 @@
+using Ending;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class PlayerMove : MonoBehaviour
 {
-    public float maxSpeed = 0f;
-    bool isRun;
+    public float maxSpeed = 0.1f;
     bool isJump;
-    bool ground;
-    public float jump;
+    public float jump = 1f;
     public bool longJump = false;
-    private Vector3 footPosition;
+    public static bool isDied;
 
+    private EndingUI ending = new EndingUI();
     public GameObject Player;
     SpriteRenderer renderer;
     Animator anime;
-    CapsuleCollider2D cap;
-    public LayerMask groundLayer;
-    Collider2D col;
     Rigidbody2D rigid;
 
     private void Start()
@@ -26,61 +24,28 @@ public class PlayerMove : MonoBehaviour
         renderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anime = GetComponent<Animator>();
-        col = GetComponent<Collider2D>();
-        isRun = false;
     }
     private void Update()
     {
-        //플레이어 이동 좌표
-        float Player = Input.GetAxisRaw("Horizontal");
-        Vector2 newPosition = new Vector2(Player * maxSpeed, 0);
-        transform.Translate(newPosition);
-
-        //플레이어 이동 및 모션
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            rigid.AddForce(Vector2.left, ForceMode2D.Impulse);
-            renderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
-        }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            rigid.AddForce(Vector2.right, ForceMode2D.Impulse);
-            renderer.flipX = Input.GetAxisRaw("Horizontal") == 0;
-        }
-        if (Mathf.Abs(rigid.velocity.x) > maxSpeed)
-        {
-            rigid.velocity = new Vector2(maxSpeed * Mathf.Sign(rigid.velocity.x), rigid.velocity.y);
-        }
-        else if (!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
-        {
-            if (Mathf.Abs(rigid.velocity.x) > 0.5f)
-            {
-                rigid.AddForce(Vector2.left * Mathf.Sign(rigid.velocity.x), ForceMode2D.Impulse);
-            }
-            else
-            {
-                {
-                    rigid.velocity = new Vector2(0, rigid.velocity.y);
-                }
-            }
-        }
-        //점프
-
-        if (rigid.velocity.x < -maxSpeed)
-        {
-            rigid.velocity = new Vector2(-maxSpeed, rigid.velocity.y);
-        }
-        else if (rigid.velocity.x > maxSpeed)
-        {
-            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
-        }
+        MovePlayer();
+        CheckRunAnimation();
+        Jump();
+    }
+    void MovePlayer()
+    {
+        float player = Input.GetAxisRaw("Horizontal");
+        Move(player);
+        
+    }
+    void Jump()
+    {
         if (!isJump && Input.GetKeyDown(KeyCode.UpArrow))
         {
             rigid.velocity = new Vector2(rigid.velocity.x, jump);
             isJump = true;
-
         }
-        if(longJump && rigid.velocity.y > 0)
+
+        if (longJump && rigid.velocity.y > 0)
         {
             rigid.gravityScale = 1.0f;
         }
@@ -88,6 +53,7 @@ public class PlayerMove : MonoBehaviour
         {
             rigid.gravityScale = 4f;
         }
+
         if (Input.GetKey(KeyCode.UpArrow))
         {
             longJump = true;
@@ -96,25 +62,70 @@ public class PlayerMove : MonoBehaviour
         {
             longJump = false;
         }
-        if (Mathf.Abs(Player) > 0f)
-        {
-            anime.SetBool("isRun", true);
-        }
-        else
-        {
-            anime.SetBool("isRun", false);
-        }
     }
 
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Ground"))
+        // 바닥에 닿으면 점프 가능 상태로 변경
+        if (collision.gameObject.CompareTag("Ground"))
         {
             isJump = false;
-            Debug.Log("Jump :" + isJump);
         }
-
     }
+    void Move(float player)
+    {
+        Vector2 newPosition = new Vector2(player * maxSpeed, 0);
+        transform.Translate(newPosition);
 
+        if(player != 0)
+        {
+            rigid.AddForce(new Vector2(player * maxSpeed, 0), ForceMode2D.Impulse);
+            renderer.flipX = player == -1;
+        }
+        if(Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            rigid.velocity = Vector2.zero;
+        }
+        LimitVelocity();
+    }
+    void LimitVelocity()
+    {
+        // 속도 제한
+        if (rigid.velocity.x < -maxSpeed)
+        {
+            rigid.velocity = new Vector2(-maxSpeed, rigid.velocity.y);
+        }
+        else if (rigid.velocity.x > maxSpeed)
+        {
+            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
+        }
+    }
+    void CheckRunAnimation()
+    {
+        float player = Input.GetAxisRaw("Horizontal");
+        anime.SetBool("isRun", Mathf.Abs(player) > 0f);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Trap"))
+        {
+            Die();
+        }
+    }
+    public void Die()
+    {
+        Debug.Log("Player Die...!");
+        //사망시 EndingUI 스크립트 실행
+        //ending.Start();
+        Respawn();
+    }
+    private void Respawn()
+    {
+        isDied = true;
+        PlayerPrefs.SetString("PrevSceneName", SceneManager.GetActiveScene().name);
+        // 2초 딜레이 예정
+        //SceneManager.LoadScene("Die");
+        //으헤헿히히히히히
+        
+    }
 }

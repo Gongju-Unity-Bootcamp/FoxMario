@@ -13,13 +13,11 @@ namespace Player
     {
         FallingManager fallingtrigger = new FallingManager();
         private EndingUI ending = new EndingUI();
-        private Vector3 initialPosition;
         public static bool isDied;
         string[] sceneNames = new string[3]{"Stage1 JH", "stage2_gang", "ending"};
 
         void Start()
         {
-            initialPosition = transform.position;
 
         }
         private void OnTriggerEnter2D(Collider2D collision)
@@ -36,11 +34,10 @@ namespace Player
 
         }
 
-
         public void Die()
         {
             Debug.Log("Player Die...!");
-            //ªÁ∏¡Ω√ EndingUI Ω∫≈©∏≥∆Æ Ω««‡
+            //ÏÇ¨ÎßùÏãú EndingUI Ïä§ÌÅ¨Î¶ΩÌä∏ Ïã§Ìñâ
             Respawn();
         }
         private void Respawn()
