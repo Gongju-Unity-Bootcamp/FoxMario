@@ -18,6 +18,7 @@ public class TrapTrigger1 : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+
             Falling.simulated = true;
             Destroy(Falling.gameObject, DeleteTime);
 

@@ -1,53 +1,76 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Text;
 using Unity.VisualScripting;
-using DieText;
-using Player;
 using UnityEditor.Experimental.GraphView;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
+
 
 namespace Ending
 {
- 
+    //플레이어 사망 관련 전체 내역
     class EndingUI : MonoBehaviour
     {
+
         //플레이어 사망카운트 초기화
+        private string sceneSave;
         public float setDieDelay = 2f;
         private int sceneCount = 0;
         private float dieCount = 0;
+        private Text countText;
 
         public void Start()
         {
-            //변경된 사망카운트를 PlayerPrefs에 "SceneSwitchCount"로 저장하기로함
+            //변경된 사망카운트를 PlayerPrefs에 "SceneSwitchCount"로 인트 타입으로 저장하기로함
             sceneCount = PlayerPrefs.GetInt("SceneSwitchCount", 3);
+            PlayerPrefs.SetString("SceneSave", SceneManager.GetActiveScene().name);
+            PlayerPrefs.Save();
+            
+
             dieCount = 0;
+            Txt();
 
         }
         public void Update()
         {
-            OnTimeCheck(PlayerDie.isDied);
+            //코루틴 대신 사용할거
+            //OnTimeCheck(PlayerDie.isDied);
+
+            // Space 클릭시 GoPreviousScene 실행
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                //PlayerDie.isDied = false;
+                GoPreviousScene();
+            }
+            // R키 입력시 사망카운트 초기화
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                PlayerPrefs.DeleteAll();
+            }
+
         }
 
-        private void OnTimeCheck(bool _isActived)
-        {
-            if (_isActived)
-            {
-                dieCount += Time.deltaTime;
+        //private void OnTimeCheck(bool _isActived)
+        //{
+        //    //코루틴 대신 사용할거
+        //    if (_isActived)
+        //    {
+        //        dieCount += Time.deltaTime;
 
-                if (dieCount > setDieDelay)
-                {
-                    GoToNextScene();
-                }
-            }
-            else
-            {
-                dieCount = 0;
-            }
-        }
+        //        if (dieCount > setDieDelay)
+        //        {
+        //            GoToNextScene();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        dieCount = 0;
+        //    }
+        //}
 
         public void GoToNextScene()
         {
@@ -58,6 +81,20 @@ namespace Ending
             SceneManager.LoadScene("Die");
         }
 
- 
+        public void GoPreviousScene()
+        {   // 인게임 씬으로 전환
+            SceneManager.LoadScene(PlayerPrefs.GetString("SceneSave"));
+            //SceneManager.LoadScene(SceneSave); < 원래의 코드
+        }
+
+        public void Txt()
+        {
+            // 저장된 사망카운트를 불러옴
+            int sceneCount = PlayerPrefs.GetInt("SceneSwitchCount");
+
+            countText.text = "" + sceneCount; // $"{sceneCount}" 도 사용가능
+
+        }
+
     }
 }
