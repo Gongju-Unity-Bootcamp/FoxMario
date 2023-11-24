@@ -133,8 +133,8 @@ GameObject:
   m_Component:
   - component: {fileID: 598123}
   - component: {fileID: 598125}
-  - component: {fileID: 598126}
   - component: {fileID: 598124}
+  - component: {fileID: 598126}
   m_Layer: 5
   m_Name: Text (Legacy)
   m_TagString: Untagged
@@ -212,10 +212,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 598122}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ae422cee4b2b94d9cd4ec40043340c, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c765e8b5bb28494dad9eaecaa7a9ab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneCount: 0
+  setDieDelay: 2
   countText: {fileID: 598124}
 --- !u!1 &3741821
 GameObject:
@@ -554,9 +554,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 684164228}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9674bd79a582a59409696ccf05242c7f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c765e8b5bb28494dad9eaecaa7a9ab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setDieDelay: 2
+  countText: {fileID: 598124}
 --- !u!1 &1392453209
 GameObject:
   m_ObjectHideFlags: 0
