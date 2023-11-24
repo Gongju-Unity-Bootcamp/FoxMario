@@ -4,29 +4,32 @@ using UnityEngine;
 
 public class TripTest_st2 : MonoBehaviour
 {
-    public Collider2D TriggerA;
-    public Collider2D TriggerB;
-    public Collider2D TriggerC;
-    public Collider2D TriggerD;
-    public Collider2D TriggerE;
-    public Collider2D TriggerF;
-    public Collider2D TriggerG;
+    public Collider2D triggerA;
+    public Collider2D triggerB;
+    public Collider2D triggerC;
+    public Collider2D triggerD;
+    public Collider2D triggerE;
+    public Collider2D triggerF;
+    public Collider2D triggerG;
+    public Collider2D triggerH;
+    public Collider2D triggerI;
 
+    public GameObject wallA;
+    public GameObject trapB;
+    public GameObject fishC;
+    public GameObject trapC;
+    public GameObject trapD;
+    public GameObject trapE;
+    public GameObject monsterG;
+    public GameObject monsterH;
 
-    public GameObject WallA;
-    public GameObject FishC;
-    public GameObject TrapC;
-
-    public Rigidbody2D TrapD;
-
-    private float TimerA = 10f;
-    private bool DeleteWallA = false;
-    private float DeleteTime = 5f;
+    private bool breakA = false;
+    private float timerA = 10f;
+    private bool deleteWallA = false;
 
     private void Update()
     {
         BreakWallA();
-
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -35,60 +38,127 @@ public class TripTest_st2 : MonoBehaviour
         {
             if (gameObject.CompareTag("Trig2-A"))
             {
-                DeleteWallA = true;
-                TriggerA.enabled = false;
+                // Trig2-A에 닿았을 때의 동작
+                breakA = true;
+                deleteWallA = true;
+                triggerA.enabled = false;
+
+                // SpriteRenderer를 비활성화
+                SpriteRenderer spriteRendererA = triggerA.GetComponent<SpriteRenderer>();
+                if (spriteRendererA != null)
+                {
+                    spriteRendererA.enabled = false;
+                }
 
                 // 오브젝트 B를 찾아서 비활성화
-                if (TriggerB != null)
+                if (triggerB != null)
                 {
-                    TriggerB.enabled = false;
+                    triggerB.enabled = false;
                 }
             }
             else if (gameObject.CompareTag("Trig2-B"))
             {
-                TriggerA.enabled = false;
-                TriggerB.enabled = false;
+                // Trig2-B에 닿았을 때의 동작
+                triggerA.gameObject.SetActive(false);
+                triggerB.enabled = false;
+
+                trapB.gameObject.SetActive(true);
             }
             else if (gameObject.CompareTag("Trig2-C"))
             {
-                TrapC.SetActive(true);
+                // Trig2-C에 닿았을 때의 동작
+                trapC.SetActive(true);
             }
             else if (gameObject.CompareTag("Trig2-D"))
             {
-                TrapD.simulated = true;
+                // Trig2-D에 닿았을 때의 동작
+                trapD.SetActive(true);
+                TrapController trapDController = trapD.GetComponent<TrapController>();
+
+                if (trapDController != null)
+                {
+                    trapDController.ActivateTrapD();
+                }
+
+                triggerD.enabled = false;
             }
             else if (gameObject.CompareTag("Trig2-E"))
             {
+                // Trig2-E에 닿았을 때의 동작
+                trapE.SetActive(true);
+                TrapController trapEController = trapE.GetComponent<TrapController>();
 
+                if (trapEController != null)
+                {
+                    trapEController.ActivateTrapE();
+                }
+
+                triggerE.enabled = false;
             }
             else if (gameObject.CompareTag("Trig2-F"))
             {
-                
-                if (TriggerG != null)
+                // Trig2-F에 닿았을 때의 동작
+                // SpriteRenderer를 비활성화
+                SpriteRenderer spriteRendererF = triggerF.GetComponent<SpriteRenderer>();
+                if (spriteRendererF != null)
                 {
-                    TriggerG.enabled = false;
+                    spriteRendererF.enabled = false;
                 }
-                TriggerF.enabled = false;
+
+                if (triggerG != null)
+                {
+                    triggerG.enabled = false;
+                }
+                triggerF.enabled = false;
             }
             else if (gameObject.CompareTag("Trig2-G"))
             {
-                TriggerG.enabled = false;
+                // Trig2-G에 닿았을 때의 동작
+                monsterG.SetActive(true);
+                TrapController trapGController = monsterG.GetComponent<TrapController>();
+
+                if (trapGController != null)
+                {
+                    trapGController.ActivateTrapG();
+                }
+
+                triggerF.gameObject.SetActive(false);
+                triggerG.enabled = false;
+            }
+            else if (gameObject.CompareTag("Trig2-H"))
+            {
+                // Trig2-H에 닿았을 때의 동작
+                monsterH.SetActive(true);
+                TrapController trapHController = monsterH.GetComponent<TrapController>();
+
+                if (trapHController != null)
+                {
+                    trapHController.ActivateTrapH();
+                }
+
+                triggerH.enabled = false;
+            }
+            else if (gameObject.CompareTag("Trig2-I"))
+            {
+                // Trig2-I에 닿았을 때의 동작
             }
         }
     }
 
     private void BreakWallA()
     {
-        TimerA -= Time.deltaTime;
-
-        if (DeleteWallA && TimerA < 0f)
+        // Trig2-A에 닿았을 때의 동작
+        if (breakA)
         {
-            if (WallA != null)
-            {
-                WallA.SetActive(false);
-            }
+            timerA -= Time.deltaTime;
 
+            if (deleteWallA && timerA < 0f)
+            {
+                if (wallA != null)
+                {
+                    wallA.SetActive(false);
+                }
+            }
         }
     }
 }
-
