@@ -1,33 +1,32 @@
+using Ending;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     public float maxSpeed = 0f;
-    bool isRun;
     bool isJump;
-    bool ground;
     public float jump;
     public bool longJump = false;
-    private Vector3 footPosition;
+    public bool isDied;
 
+    private EndingUI ending = new EndingUI();
     public GameObject Player;
     SpriteRenderer renderer;
     Animator anime;
-    CapsuleCollider2D cap;
-    public LayerMask groundLayer;
-    Collider2D col;
     Rigidbody2D rigid;
-
+    string[] sceneNames = new string[3] { "Stage1 JH", "stage2_gang", "ending" };
     private void Start()
     {
         renderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anime = GetComponent<Animator>();
-        col = GetComponent<Collider2D>();
-        isRun = false;
     }
     private void Update()
     {
+        //플레이어 move -> 좌우 이동, 점프, 애니메이션?, 
+
+
         //플레이어 이동 좌표
         float Player = Input.GetAxisRaw("Horizontal");
         Vector2 newPosition = new Vector2(Player * maxSpeed, 0);
@@ -44,21 +43,7 @@ public class PlayerController : MonoBehaviour
             rigid.AddForce(Vector2.right, ForceMode2D.Impulse);
             renderer.flipX = Input.GetAxisRaw("Horizontal") == 0;
         }
-        if (Mathf.Abs(rigid.velocity.x) > maxSpeed)
-        {
-            rigid.velocity = new Vector2(maxSpeed * Mathf.Sign(rigid.velocity.x), rigid.velocity.y);
-        }
-        else if (!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
-        {
-            if (Mathf.Abs(rigid.velocity.x) > 0.5f)
-            {
-                rigid.AddForce(Vector2.left * Mathf.Sign(rigid.velocity.x), ForceMode2D.Impulse);
-            }
-            else
-            {
-                rigid.velocity = new Vector2(0, rigid.velocity.y);
-            }
-        }
+
         //점프
 
         if (rigid.velocity.x < -maxSpeed)
@@ -75,7 +60,7 @@ public class PlayerController : MonoBehaviour
             isJump = true;
 
         }
-        if(longJump && rigid.velocity.y > 0)
+        if (longJump && rigid.velocity.y > 0)
         {
             rigid.gravityScale = 1.0f;
         }
@@ -110,5 +95,41 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Jump :" + isJump);
         }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Trap"))
+        {
+            Die();
+        }
+        if (collision.gameObject.CompareTag("NextScene"))
+        {
+            NextScene();
+        }
+    }
+    public void Die()
+    {
+        Debug.Log("Player Die...!");
+        //사망시 EndingUI 스크립트 실행
+        //ending.Start();
+        Respawn();
+    }
+    private void Respawn()
+    {
+        isDied = true;
+        PlayerPrefs.SetString("PrevSceneName", SceneManager.GetActiveScene().name);
+        // 2초 딜레이 예정
+        //SceneManager.LoadScene("Die");
+    }
+    private void NextScene()
+    {
+        string realScene = SceneManager.GetActiveScene().name;
 
+        for (int index = 0; index < sceneNames.Length; index++)
+        {
+            if (sceneNames[index] == realScene)
+            {
+                SceneManager.LoadScene(sceneNames[index + 1]);
+            }
+        }
+    }
 }
