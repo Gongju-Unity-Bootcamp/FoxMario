@@ -908,10 +908,8 @@ MonoBehaviour:
   maxSpeed: 0.03
   jump: 10
   longJump: 0
+  isDied: 0
   Player: {fileID: 1479911170}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!95 &1479911176
 Animator:
   serializedVersion: 5
@@ -1231,11 +1229,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1952654200}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8c765e8b5bb28494dad9eaecaa7a9ab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setDieDelay: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

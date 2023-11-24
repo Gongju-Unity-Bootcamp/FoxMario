@@ -14,7 +14,7 @@ namespace Player
         FallingManager fallingtrigger = new FallingManager();
         private EndingUI ending = new EndingUI();
         public static bool isDied;
-        string[] sceneNames = new string[3]{"Stage1 JH", "stage2_gang", "ending"};
+        string[] sceneNames = new string[3]{"Stage1", "stage2_gang", "ending"};
 
         void Start()
         {

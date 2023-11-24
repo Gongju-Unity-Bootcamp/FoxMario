@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController_2 : MonoBehaviour
 {
-    public float maxSpeed = 0.06f;
+    public float maxSpeed = 0f;
     bool isJump;
     public float jump;
     public bool longJump = false;
@@ -15,16 +15,18 @@ public class PlayerController_2 : MonoBehaviour
     SpriteRenderer renderer;
     Animator anime;
     Rigidbody2D rigid;
-    string[] sceneNames = new string[3] { "Stage1 JH", "stage2_gang", "ending" };
+    string[] sceneNames = new string[3] { "Stage1", "stage2_gang", "ending" };
     private void Start()
     {
         renderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anime = GetComponent<Animator>();
+
+
     }
     private void Update()
     {
-        //플레이어 move -> 좌우 이동, 점프, 애니메이션?, 
+        //플레이어 move -> 좌우 이동, 점프, 애니메이션 
 
 
         //플레이어 이동 좌표
@@ -57,7 +59,6 @@ public class PlayerController_2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             rigid.velocity = new Vector2(rigid.velocity.x, jump);
-
         }
         if (longJump && rigid.velocity.y > 0)
         {
@@ -84,6 +85,7 @@ public class PlayerController_2 : MonoBehaviour
             anime.SetBool("isRun", false);
         }
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Trap"))
@@ -100,6 +102,8 @@ public class PlayerController_2 : MonoBehaviour
         Debug.Log("Player Die...!"); 
         //사망시 EndingUI 스크립트 실행
         //ending.Start();
+        SceneManager.LoadScene("Die");
+        EndingUI.sceneCount--;
         Respawn();
     }
     private void Respawn()
@@ -107,7 +111,6 @@ public class PlayerController_2 : MonoBehaviour
         isDied = true;
         PlayerPrefs.SetString("PrevSceneName", SceneManager.GetActiveScene().name);
         // 2초 딜레이 예정
-        //SceneManager.LoadScene("Die");
     }
     private void NextScene()
     {
