@@ -143,7 +143,7 @@ public class TripTest_st2 : MonoBehaviour
                 // Trig2-I에 닿았을 때의 동작
                 PlayerController_2 playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController_2>();
 
-                // PlayerController_2 스크립트의 maxSpeed를 0.02f로 변경
+                // PlayerController_2 스크립트의 maxSpeed * 0.1 로 변경
                 if (playerController != null)
                 {
                     playerController.maxSpeed *= 0.1f;
