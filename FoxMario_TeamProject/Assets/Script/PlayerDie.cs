@@ -4,13 +4,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Ending;
 using System.Threading;
+using FallingManagername;
 
 namespace Player
 {
+
     public class PlayerDie : MonoBehaviour
     {
+        FallingManager fallingtrigger = new FallingManager();
         private EndingUI ending = new EndingUI();
         public static bool isDied;
+        string[] sceneNames = new string[3]{"Stage1 JH", "stage2_gang", "ending"};
 
         void Start()
         {
@@ -22,23 +26,40 @@ namespace Player
             {
                 Die();
             }
+
+            if (collision.gameObject.CompareTag("NextScene"))
+            {
+                NextScene();
+            }
+
         }
 
         public void Die()
         {
             Debug.Log("Player Die...!");
-            //ªÁ∏¡Ω√ EndingUI Ω∫≈©∏≥∆Æ Ω««‡
-            //ending.Start();
+            //ÏÇ¨ÎßùÏãú EndingUI Ïä§ÌÅ¨Î¶ΩÌä∏ Ïã§Ìñâ
             Respawn();
         }
         private void Respawn()
         {
             isDied = true;
             PlayerPrefs.SetString("PrevSceneName", SceneManager.GetActiveScene().name);
-            // 2√  µÙ∑π¿Ã øπ¡§
-            //SceneManager.LoadScene("Die");
+
         }
-    
+        
+        
+        private void NextScene()
+        {
+            string realScene = SceneManager.GetActiveScene().name;
+
+            for (int index = 0; index < sceneNames.Length; index++) 
+            {
+                if (sceneNames[index] == realScene)
+                {
+                    SceneManager.LoadScene(sceneNames[index + 1]);
+                }
+            }
+        }
 
     }
 }

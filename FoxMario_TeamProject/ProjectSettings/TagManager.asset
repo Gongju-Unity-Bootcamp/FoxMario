@@ -8,11 +8,6 @@ TagManager:
   - LeftWill
   - RightWill
   - Die
-  - TriggerDown
-  - TriggerRight
-  - TriggerUp
-  - TriggerLeft
-  - st2_TriggerStart
   - Trap
   - St1_House
   - Trig2-A
@@ -22,6 +17,8 @@ TagManager:
   - Trig2-E
   - Trig2-F
   - Trig2-G
+  - Trigger
+  - NextScene
   layers:
   - Default
   - TransparentFX
