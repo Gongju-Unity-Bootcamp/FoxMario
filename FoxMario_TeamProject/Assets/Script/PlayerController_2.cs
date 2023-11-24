@@ -97,7 +97,7 @@ public class PlayerController_2 : MonoBehaviour
     }
     public void Die()
     {
-        Debug.Log("Player Die...!");
+        Debug.Log("Player Die...!"); 
         //사망시 EndingUI 스크립트 실행
         //ending.Start();
         Respawn();
