@@ -24,7 +24,7 @@ public class TripTest_st2 : MonoBehaviour
     public GameObject monsterH;
 
     private bool breakA = false;
-    private float timerA = 10f;
+    private float timerA = 4f;
     private bool deleteWallA = false;
 
     private void Update()
@@ -141,6 +141,13 @@ public class TripTest_st2 : MonoBehaviour
             else if (gameObject.CompareTag("Trig2-I"))
             {
                 // Trig2-I에 닿았을 때의 동작
+                PlayerController_2 playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController_2>();
+
+                // PlayerController_2 스크립트의 maxSpeed를 0.02f로 변경
+                if (playerController != null)
+                {
+                    playerController.maxSpeed *= 0.1f;
+                }
             }
         }
     }
