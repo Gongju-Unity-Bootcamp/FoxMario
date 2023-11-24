@@ -10,12 +10,10 @@ namespace Player
     public class PlayerDie : MonoBehaviour
     {
         private EndingUI ending = new EndingUI();
-        private Vector3 initialPosition;
         public static bool isDied;
-        // Start is called before the first frame update
+
         void Start()
         {
-            initialPosition = transform.position;
 
         }
         private void OnTriggerEnter2D(Collider2D collision)
@@ -25,7 +23,6 @@ namespace Player
                 Die();
             }
         }
-
 
         public void Die()
         {
