@@ -45,7 +45,7 @@ public class Monster : MonoBehaviour
         {
             sRenderer.flipX = true;
             rigib.velocity = new Vector2(RightSpeed, 0);
-            Debug.Log("gg");
+            //Debug.Log("gg");
         }
 
         if (other.gameObject.CompareTag("RightWill"))

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using static UnityEditor.Timeline.TimelinePlaybackControls;
-
+using JetBrains.Annotations;
 
 namespace Ending
 {
@@ -19,14 +19,13 @@ namespace Ending
         //플레이어 사망카운트 초기화
         private string sceneSave;
         public float setDieDelay = 2f;
-        private int sceneCount = 0;
+        public static int sceneCount = 3;
         private float dieCount = 0;
-        private Text countText;
+        public Text countText;
 
         public void Start()
         {
             //변경된 사망카운트를 PlayerPrefs에 "SceneSwitchCount"로 인트 타입으로 저장하기로함
-            sceneCount = PlayerPrefs.GetInt("SceneSwitchCount", 3);
             PlayerPrefs.SetString("SceneSave", SceneManager.GetActiveScene().name);
             PlayerPrefs.Save();
             
@@ -75,24 +74,21 @@ namespace Ending
         public void GoToNextScene()
         {
             //사망카운트 -1하며 변경된 내용을 저장하고 Die씬으로 변경
-            sceneCount--;
-            PlayerPrefs.SetInt("SceneSwitchCount", sceneCount);
             PlayerPrefs.Save();
             SceneManager.LoadScene("Die");
         }
 
         public void GoPreviousScene()
         {   // 인게임 씬으로 전환
-            SceneManager.LoadScene(PlayerPrefs.GetString("SceneSave"));
+            SceneManager.LoadScene(PlayerPrefs.GetString("PrevSceneName"));
             //SceneManager.LoadScene(SceneSave); < 원래의 코드
         }
 
         public void Txt()
         {
             // 저장된 사망카운트를 불러옴
-            int sceneCount = PlayerPrefs.GetInt("SceneSwitchCount");
-
-            countText.text = "" + sceneCount; // $"{sceneCount}" 도 사용가능
+            PlayerPrefs.SetInt("DieCount", sceneCount);
+            countText.text = "" + PlayerPrefs.GetInt("DieCount"); // $"{sceneCount}" 도 사용가능
 
         }
 

@@ -15,16 +15,18 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer renderer;
     Animator anime;
     Rigidbody2D rigid;
-    string[] sceneNames = new string[3] { "Stage1 JH", "stage2_gang", "ending" };
+    string[] sceneNames = new string[3] { "Stage1", "stage2_gang", "ending" };
     private void Start()
     {
         renderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anime = GetComponent<Animator>();
+
+
     }
     private void Update()
     {
-        //플레이어 move -> 좌우 이동, 점프, 애니메이션?, 
+        //플레이어 move -> 좌우 이동, 점프, 애니메이션 
 
 
         //플레이어 이동 좌표
@@ -111,14 +113,16 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Player Die...!");
         //사망시 EndingUI 스크립트 실행
         //ending.Start();
+        SceneManager.LoadScene("Die");
+        EndingUI.sceneCount--;
         Respawn();
     }
     private void Respawn()
     {
         isDied = true;
         PlayerPrefs.SetString("PrevSceneName", SceneManager.GetActiveScene().name);
+        Debug.Log("Tlqkf");
         // 2초 딜레이 예정
-        //SceneManager.LoadScene("Die");
     }
     private void NextScene()
     {
